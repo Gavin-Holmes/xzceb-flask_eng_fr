@@ -1,13 +1,19 @@
+'''
+Creating a translation api.
+'''
 #!/usr/bin/python3
 import json
+import os
 from ibm_watson import LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# Declare global variables
+'''
+Declare global variables
+'''
+
 apikey = os.environ['apikey']
 url = os.environ['url']
 ibm_watson_version = '2018-05-01'
@@ -54,9 +60,9 @@ def englishToFrench(english_text):
     ).get_result()
 
     french_text = json.dumps(get_french_text, indent=2, ensure_ascii=False)
-    return french_text
+    return json.loads(french_text)['translations'][0]['translation']
 
-# print(englishToFrench('test and some other nonsense'))
+#print(englishToFrench('test and some other nonsense'))
 
 def frenchToEnglish(french_text):
     """
@@ -78,6 +84,6 @@ def frenchToEnglish(french_text):
     ).get_result()
 
     english_text = json.dumps(get_english_text, indent=2, ensure_ascii=False)
-    return english_text
+    return json.loads(english_text)['translations'][0]['translation']
 
-# print(frenchToEnglish('Test et autres non-sens'))
+#print(frenchToEnglish('Test et autres non-sens'))
